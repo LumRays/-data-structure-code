@@ -110,7 +110,21 @@ public class MyArrayList implements IList {
 
     @Override
     public void remove(int toRemove) {
-
+        if (isEmpty()) {
+            throw new EmptyListException(Constant.EMPTY_LIST);
+        }
+        //2.查找要删除数据的下标
+        int index = indexOf(toRemove);
+        if (index == -1){
+            System.out.println("没有你要删除的数据！");
+            return;
+        }
+        for (int i = index; i < usedSize - 1; i++) {
+            elem[i] = elem[i + 1];
+        }
+        usedSize--;
+        //如果是引用类型 需要手动置为空
+        //elem[usedSize] = null;
     }
 
     @Override
@@ -120,7 +134,12 @@ public class MyArrayList implements IList {
 
     @Override
     public void clear() {
+        for (int i = 0; i < usedSize; i++) {
+            //elem[i] = null;
+            elem[i] = 0;
+        }
 
+        usedSize = 0;
     }
 
     @Override
