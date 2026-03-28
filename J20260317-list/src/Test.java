@@ -1,9 +1,43 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Test {
 
+    public static int removeDuplicates(int[] nums) {
+        for(int i = 0;i < nums.length - 1;i++) {
+            if(nums[i] == nums[i + 1]) {
+                nums[i] = nums[i + 1];
+                i--;
+            }
+        }
+        int k = nums.length;
+        return k;
+    }
+
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        for(int i = 0;i < n;i++) {
+            nums1[m + i] = nums2[i];
+        }
+        Arrays.sort(nums1);
+        System.out.println(Arrays.toString(nums1));
+    }
+
     public static void main(String[] args) {
+        int[] arr = {0,0,1,1,1,2,2,3,3,4};
+        int ret = removeDuplicates(arr);
+        System.out.println(ret);
+        System.out.println(Arrays.toString(arr));
+    }
+    public static void main5(String[] args) {
+        int[] arr1 = {1,2,3,0,0,0};
+        int m = 3;
+        int[] arr2 = {2,5,6};
+        int n = 3;
+        merge(arr1,m,arr2,n);
+    }
+
+    public static void main4(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
