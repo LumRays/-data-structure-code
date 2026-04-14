@@ -200,4 +200,39 @@ public class MySingleList implements ILinkedList {
         }
         System.out.println();
     }
+
+    public ListNode reverseList() {
+        //1. 判断链表是不是空的
+        if(head == null) {
+            return null;
+        }
+
+        //2. 判断是不是只有1个节点
+        if(head.next == null) {
+            return head;
+        }
+
+        //3. 说明至少有2个节点及其以上
+        ListNode cur = head.next;
+        head.next = null;
+
+        while(cur != null) {
+            ListNode curNext = cur.next;
+            //这2行代码在进行头插
+            cur.next = head;
+            head = cur;
+            //
+            cur = curNext;
+        }
+        return head;
+    }
+
+    public void display(ListNode newHead) {
+        ListNode cur = newHead;
+        while (cur != null) {
+            System.out.print(cur.val + " ");
+            cur = cur.next;
+        }
+        System.out.println();
+    }
 }
