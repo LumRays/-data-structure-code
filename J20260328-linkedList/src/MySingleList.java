@@ -201,6 +201,7 @@ public class MySingleList implements ILinkedList {
         System.out.println();
     }
 
+    //反转链表
     public ListNode reverseList() {
         //1. 判断链表是不是空的
         if(head == null) {
@@ -225,6 +226,78 @@ public class MySingleList implements ILinkedList {
             cur = curNext;
         }
         return head;
+    }
+
+    //中间节点
+    public ListNode middleNode() {
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+    //倒数第k个节点
+    public int kthToLast(int k) {
+        //1. 判断k的值的合法性
+        if (k <= 0 || head == null) {
+            return -1;
+        }
+
+        //2. 先让fast走 k - 1 步
+        ListNode fast = head;
+        ListNode slow = head;
+        int count = 0;
+        while (count != k - 1) {
+            fast = fast.next;
+            count++;
+        }
+        //3. fast和slow再开始同时出发
+        while (fast.next != null) {
+            fast = fast.next;
+            if (fast == null) {
+                return -1;
+            }
+            slow = slow.next;
+        }
+        return slow.val;
+    }
+
+    //链表的回文结构
+    public boolean chkPalindrome() {
+        if(head == null) {
+            return true;
+        }
+        //1. 找中间节点
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        //2. slow此时指向了中间位置 开始翻转后半部分
+        ListNode cur = slow.next;
+        while(cur != null) {
+            ListNode curNext = cur.next;
+            cur.next = slow;
+            slow = cur;
+            cur = curNext;
+        }
+        //3. 此时head和cur一直走 直到相遇
+        while(head != slow) {
+            if(head.val != slow.val) {
+                return false;
+            }
+            //判断偶数的情况
+            if (head.next == slow) {
+                return true;
+            }
+            head = head.next;
+            slow = slow.next;
+        }
+        return true;
     }
 
     public void display(ListNode newHead) {

@@ -1,5 +1,44 @@
 public class Test {
+
+    public static MySingleList.ListNode mergeTwoLists(MySingleList.ListNode head1, MySingleList.ListNode head2) {
+        MySingleList.ListNode newHead = new MySingleList.ListNode(-1);
+        MySingleList.ListNode tmp = newHead;
+        while(head1 != null && head2 != null) {
+            if(head1.val < head2.val) {
+                tmp.next = head1;
+                tmp = head1;
+                head1 = head1.next;
+            }else {
+                tmp.next = head2;
+                tmp = head2;
+                head2 = head2.next;
+            }
+        }
+        if(head1 != null) {
+            tmp.next = head1;
+        }
+        if(head2 != null) {
+            tmp.next = head2;
+        }
+        return newHead.next;
+    }
+
     public static void main(String[] args) {
+        MySingleList mySingleList = new MySingleList();
+
+        mySingleList.addLast(11);
+        mySingleList.addLast(21);
+        mySingleList.addLast(21);
+        mySingleList.addLast(11);
+        mySingleList.display();
+
+        System.out.println("==============");
+
+        boolean flg = mySingleList.chkPalindrome();
+        System.out.println(flg);
+    }
+
+    public static void main2(String[] args) {
         MySingleList mySingleList = new MySingleList();
         mySingleList.addLast(12);
         mySingleList.addLast(23);
@@ -10,8 +49,24 @@ public class Test {
 
         System.out.println("======================");
 
-        mySingleList.reverseList();
-        mySingleList.display();
+        MySingleList mySingleList2 = new MySingleList();
+        mySingleList2.addLast(10);
+        mySingleList2.addLast(28);
+        mySingleList2.addLast(48);
+        mySingleList2.addLast(70);
+        mySingleList2.addLast(86);
+        mySingleList2.display();
+
+        MySingleList.ListNode newHead = mergeTwoLists(mySingleList.head,mySingleList2.head);
+        mySingleList.display(newHead);
+        /*int ret = mySingleList.kthToLast(1);
+        System.out.println(ret);*/
+
+        /*MySingleList.ListNode ret = mySingleList.middleNode();
+        System.out.println(ret.val);*/
+
+        /*mySingleList.reverseList();
+        mySingleList.display();*/
     }
     public static void main1(String[] args) {
         MySingleList mySingleList = new MySingleList();
