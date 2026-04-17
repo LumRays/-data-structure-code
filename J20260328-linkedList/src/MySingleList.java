@@ -300,6 +300,49 @@ public class MySingleList implements ILinkedList {
         return true;
     }
 
+    //链表分割
+    public ListNode partition(ListNode pHead, int x) {
+        // write code here
+        if(pHead == null) {
+            return null;
+        }
+        ListNode beforeStart = null;
+        ListNode beforeEnd = null;
+        ListNode afterStart = null;
+        ListNode afterEnd = null;
+        ListNode cur = pHead;
+        while(cur != null) {
+            if(cur.val < x) {
+                //小于x
+                if(beforeStart == null) {
+                    //说明这是第一次进行插入
+                    beforeStart = beforeEnd = cur;
+                }else {
+                    beforeEnd.next = cur;
+                    beforeEnd = beforeEnd.next;
+                }
+            }else {
+                //大于或等于x
+                if(afterStart == null) {
+                    afterStart = afterEnd = cur;
+                }else {
+                    afterEnd.next = cur;
+                    afterEnd = afterEnd.next;
+                }
+            }
+            cur = cur.next;
+        }
+        //第一个段 没有数据的情况
+        if(beforeStart == null) {
+            return afterStart;
+        }
+        beforeEnd.next = afterStart;
+        if(afterStart != null) {
+            afterEnd.next = null;
+        }
+        return beforeStart;
+    }
+
     public void display(ListNode newHead) {
         ListNode cur = newHead;
         while (cur != null) {
