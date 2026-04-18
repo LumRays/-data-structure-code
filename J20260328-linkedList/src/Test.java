@@ -1,6 +1,6 @@
 public class Test {
 
-    public MySingleList.ListNode getIntersectionNode(MySingleList.ListNode headA, MySingleList.ListNode headB) {
+    public static MySingleList.ListNode getIntersectionNode(MySingleList.ListNode headA, MySingleList.ListNode headB) {
         MySingleList.ListNode pl = headA;
         MySingleList.ListNode ps = headB;
         //这里保存headA的这个链表的长度
@@ -62,10 +62,25 @@ public class Test {
     }
 
     public static void createCut(MySingleList.ListNode headA, MySingleList.ListNode headB) {
-        
+        headB.next.next = headA.next.next.next;
     }
 
     public static void main(String[] args) {
+        MySingleList mySingleList = new MySingleList();
+        mySingleList.addLast(12);
+        mySingleList.addLast(23);
+        mySingleList.addLast(34);
+        mySingleList.addLast(45);
+        mySingleList.addLast(56);
+        mySingleList.display();
+
+        mySingleList.createLoop();
+
+        boolean flg = mySingleList.hasCycle(mySingleList.head);
+        System.out.println(flg);
+    }
+
+    public static void main4(String[] args) {
         MySingleList mySingleList = new MySingleList();
         mySingleList.addLast(12);
         mySingleList.addLast(23);
@@ -85,6 +100,13 @@ public class Test {
         mySingleList2.display();
 
         System.out.println("======================");
+
+        createCut(mySingleList.head,mySingleList2.head);
+        mySingleList2.display();
+
+        System.out.println("======================");
+        MySingleList.ListNode ret = getIntersectionNode(mySingleList.head,mySingleList2.head);
+        System.out.println(ret.val);
     }
 
     public static void main3(String[] args) {

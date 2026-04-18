@@ -343,6 +343,53 @@ public class MySingleList implements ILinkedList {
         return beforeStart;
     }
 
+    //环形链表
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //环形链表的入口点
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow) {
+                break;
+            }
+        }
+        //2种情况 没有环或者有环(遇到了break才结束的)
+        if(fast == null || fast.next == null) {
+            return null;//没有环
+        }
+        fast = head;
+        while(fast != slow) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return fast;
+    }
+
+
+    public void createLoop() {
+        ListNode cur = head;
+        while (cur.next != null) {
+            cur = cur.next;
+        }
+        cur.next = head.next;
+    }
+
+
     public void display(ListNode newHead) {
         ListNode cur = newHead;
         while (cur != null) {
