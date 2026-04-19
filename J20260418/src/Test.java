@@ -3,6 +3,23 @@ import java.util.*;
 public class Test {
 
     public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();
+        //压栈
+        stack.push(12);
+        stack.push(23);
+        stack.push(34);
+        stack.push(45);
+
+        int ret = stack.pop();
+        System.out.println(ret);
+
+        //peek 获取栈顶元素
+        int ret2 = stack.peek();
+        System.out.println(ret2);
+    }
+
+
+    public static void main2(String[] args) {
         LinkedList<Integer> list = new LinkedList<>();
         list.add(10);
         list.add(18);
