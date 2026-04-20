@@ -1,5 +1,6 @@
 package stackdemo;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class Test {
@@ -89,8 +90,13 @@ public class Test {
     }
 
 
-
     public static void main(String[] args) {
+        LinkedList<Integer> stack = new LinkedList<>();
+        stack.push(1);
+
+    }
+
+    public static void main1(String[] args) {
         MyStack<Integer> myStack = new MyStack<>();
         myStack.push(1);
         myStack.push(2);
