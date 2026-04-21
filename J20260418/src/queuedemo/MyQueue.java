@@ -29,19 +29,27 @@ public class MyQueue {
 
     //获取队头元素删除
     public int poll() {
-
+        if (first == null) {
+            return -1;
+        }
+        int val = first.val;
+        if (first == last) {
+            first = null;
+            last = null;
+        }else {
+            first = first.next;
+            first.prev = null;
+        }
+        return val;
     }
 
     //获取队头元素但是不删除
     public int peek() {
         if (first == null) {
-            return null;
-        } else if (first == last) {
-            first = null;
-            last = null;
-        }else {
-            first = first.next;
+            return -1;
         }
+        int val = first.val;
+        return val;
     }
 
     //相当于求链表的长度
