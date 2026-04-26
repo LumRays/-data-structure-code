@@ -146,4 +146,83 @@ public class BinaryTree {
         return null;
     }
 
+    //翻转二叉树
+    public BinaryTree.TreeNode invertTree(BinaryTree.TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        if (root.left == null && root.right == null) {
+            return root;
+        }
+        BinaryTree.TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+
+    //对称二叉树
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+        return isSymmetricChild(root.left,root.right);
+    }
+
+    public boolean isSymmetricChild(TreeNode leftTree,TreeNode rightTree) {
+        if(leftTree == null && rightTree != null || leftTree != null && rightTree == null) {
+            return false;
+        }
+        if(leftTree == null && rightTree == null) {
+            return true;
+        }
+        if(leftTree.val != rightTree.val) {
+            return false;
+        }
+        return isSymmetricChild(leftTree.left,rightTree.right) &&
+                isSymmetricChild(leftTree.right,rightTree.left);
+    }
+
+    //平衡二叉树 时间复杂度：O(N)
+    public int getHeight2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftTreeHeight = getHeight2(root.left);
+        if(leftTreeHeight < 0) {
+            return -1;
+        }
+        int rightTreeHeight = getHeight2(root.right);
+        if(leftTreeHeight >= 0 && rightTreeHeight >= 0
+                && Math.abs(leftTreeHeight - rightTreeHeight) <= 1) {
+            return Math.max(leftTreeHeight,rightTreeHeight) + 1;
+        }else {
+            return -1;
+        }
+    }
+
+    public boolean isBalanced(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+        return getHeight2(root) >= 0;
+    }
+
+    //创建二叉树
+    public int i = 0;
+    public TreeNode createTree(String str) {
+        char ch = str.charAt(i);
+        TreeNode root = null;
+        if(ch != '#') {
+            root = new TreeNode(ch);
+            i++;
+            root.left = createTree(str);
+            root.right = createTree(str);
+        }else {
+            i++;
+        }
+        return root;
+    }
+
 }
