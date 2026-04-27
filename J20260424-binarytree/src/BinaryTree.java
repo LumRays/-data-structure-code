@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class BinaryTree {
 
     static class TreeNode {
@@ -223,6 +228,79 @@ public class BinaryTree {
             i++;
         }
         return root;
+    }
+
+    //层序遍历
+    public void levelOrder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            System.out.print(cur.val + " ");
+            if (cur.left != null) {
+                queue.offer(cur.left);
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+            }
+        }
+    }
+
+    public List<List<Character>> levelOrder2(TreeNode root) {
+        List<List<Character>> ret = new ArrayList<>();
+        if (root == null) {
+            return ret;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            List<Character> curRow = new ArrayList<>();
+            int size = queue.size();
+            while (size != 0) {
+                TreeNode cur = queue.poll();
+                curRow.add(cur.val);
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+                size--;
+            }
+            ret.add(curRow);
+        }
+        return ret;
+    }
+
+    // 判断一棵树是不是完全二叉树
+    public boolean isCompleteTree(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            if (cur != null) {
+                queue.offer(cur.left);
+                queue.offer(cur.right);
+            }else {
+                break;
+            }
+        }
+        //判断队列中剩余的元素是否全为空
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.peek();
+            if (cur != null) {
+                return false;
+            }else {
+                queue.poll();
+            }
+        }
+        return true;
     }
 
 }

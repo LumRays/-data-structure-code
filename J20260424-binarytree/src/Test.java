@@ -65,6 +65,12 @@ public class Test {
         System.out.print("是否存在字符'F'：");
         BinaryTree.TreeNode node = binaryTree.find(root,'F');
         System.out.println(node.val);
+        System.out.print("层序遍历：");
+        binaryTree.levelOrder(root);
+        System.out.println();
+        System.out.print("该树是否为完全二叉树：");
+        boolean completeTree = binaryTree.isCompleteTree(root);
+        System.out.println(completeTree);
     }
 
 }
