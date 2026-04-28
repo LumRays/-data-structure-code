@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class BinaryTree {
 
@@ -301,6 +298,108 @@ public class BinaryTree {
             }
         }
         return true;
+    }
+
+    //最近公共祖先 - 方法一
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) {
+            return null;
+        }
+        if(root == p || root == q) {
+            return root;
+        }
+        TreeNode leftRet = lowestCommonAncestor(root.left,p,q);
+        TreeNode rightRet = lowestCommonAncestor(root.right,p,q);
+        if(leftRet != null && rightRet != null) {
+            return root;
+        }else if(leftRet != null) {
+            return leftRet;
+        }else {
+            return rightRet;
+        }
+    }
+
+    //找到root这个节点到node这个节点的路径上的所有节点，存储在栈中
+    public boolean getPath(TreeNode root, TreeNode node, Stack<TreeNode> stack) {
+        if (root == null) {
+            return false;
+        }
+        stack.push(root);
+        if (root == node) {
+            return true;
+        }
+        boolean flg = getPath(root.left,node,stack);
+        if (flg) {
+            return true;
+        }
+        flg = getPath(root.right,node,stack);
+        if (flg) {
+            return true;
+        }
+        stack.pop();
+        return false;
+    }
+
+    //- 方法二
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        }
+        Stack<TreeNode> stackP = new Stack<>();
+        Stack<TreeNode> stackQ = new Stack<>();
+        getPath(root,p,stackP);
+        getPath(root,q,stackQ);
+        int sizeP = stackP.size();
+        int sizeQ = stackQ.size();
+        int size = sizeP - sizeQ;
+        if (size > 0) {
+            while (size != 0) {
+                stackP.pop();
+                size--;
+            }
+        }else {
+            size = sizeQ - sizeP;
+            while (size != 0) {
+                stackQ.pop();
+                size--;
+            }
+        }
+        //此时，两个栈的大小是一样的
+        while (!stackP.isEmpty() && !stackQ.isEmpty()) {
+            if (stackP.peek().equals(stackQ.peek())) {
+                return stackP.peek();
+            }
+            stackP.pop();
+            stackQ.pop();
+        }
+        return null;
+    }
+
+    //二叉树的层序遍历(自下而上)
+    public List<List<Character>> levelOrderBottom(TreeNode root) {
+        List<List<Character>> ret = new ArrayList<>();
+        if (root == null) {
+            return ret;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            List<Character> curRow = new ArrayList<>();
+            int size = queue.size();
+            while (size != 0) {
+                TreeNode cur = queue.poll();
+                curRow.add(cur.val);
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+                size--;
+            }
+            ret.add(0,curRow);
+        }
+        return ret;
     }
 
 }
