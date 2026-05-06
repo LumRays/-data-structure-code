@@ -402,4 +402,70 @@ public class BinaryTree {
         return ret;
     }
 
+    //从前序与中序遍历序列构造二叉树
+    /*public int preIndex = 0;
+
+    public int findVal(int[] inorder, int inBegin, int inEnd, int key) {
+        for(int i = inBegin;i <= inEnd;i++) {
+            if(inorder[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public TreeNode buildTreeChild(int[] preorder, int[] inorder, int inBegin, int inEnd) {
+        //没有子树
+        if(inBegin > inEnd) {
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[preIndex]);
+        //在中序遍历当中，找到当前根节点的位置
+        int rootIndex = findVal(inorder,inBegin,inEnd,preorder[preIndex]);
+        preIndex++;
+        //确定左树和右树
+        root.left = buildTreeChild(preorder,inorder,inBegin,rootIndex - 1);
+        root.right = buildTreeChild(preorder,inorder,rootIndex + 1,inEnd);
+        return root;
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return buildTreeChild(preorder,inorder,0,inorder.length - 1);
+    }*/
+
+
+    //从中序与后序遍历序列构造二叉树
+    /*public int postIndex = 0;
+
+    public int findVal(int[] inorder, int inBegin, int inEnd, int key) {
+        for(int i = inBegin;i <= inEnd;i++) {
+            if(inorder[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public TreeNode buildTreeChild(int[] inorder, int[] postorder, int inBegin, int inEnd) {
+        //没有子树
+        if(inBegin > inEnd) {
+            return null;
+        }
+        TreeNode root = new TreeNode(postorder[postIndex]);
+        //在中序遍历当中，找到当前根节点的位置
+        int rootIndex = findVal(inorder,inBegin,inEnd,postorder[postIndex]);
+        postIndex--;
+        //确定右树和左树
+        root.right = buildTreeChild(inorder,postorder,rootIndex + 1,inEnd);
+        root.left = buildTreeChild(inorder,postorder,inBegin,rootIndex - 1);
+        return root;
+    }
+
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        postIndex = postorder.length - 1;
+        return buildTreeChild(inorder,postorder,0,inorder.length - 1);
+    }*/
+
+    
+
 }
