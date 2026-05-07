@@ -466,6 +466,40 @@ public class BinaryTree {
         return buildTreeChild(inorder,postorder,0,inorder.length - 1);
     }*/
 
-    
+    //根据二叉树创建字符串
+    public String tree2str(TreeNode root) {
+        StringBuilder stringBuilder = new StringBuilder();
+        tree2strChild(root,stringBuilder);
+        return stringBuilder.toString();
+    }
+
+    public void tree2strChild(TreeNode root,StringBuilder stringBuilder) {
+        if(root == null) {
+            return;
+        }
+        stringBuilder.append(root.val);
+        //root的左子树
+        if(root.left != null) {
+            stringBuilder.append("(");
+            tree2strChild(root.left,stringBuilder);
+            stringBuilder.append(")");
+        }else{
+            if(root.right == null) {
+                //左边为空 && 右边也为空
+                return;
+            }else{
+                //左边为空 && 右边不为空
+                stringBuilder.append("()");
+            }
+        }
+        //root的右子树
+        if(root.right != null) {
+            stringBuilder.append("(");
+            tree2strChild(root.right,stringBuilder);
+            stringBuilder.append(")");
+        }else{
+            return;
+        }
+    }
 
 }
