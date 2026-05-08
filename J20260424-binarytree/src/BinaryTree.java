@@ -502,4 +502,113 @@ public class BinaryTree {
         }
     }
 
+    //二叉树前序递归遍历实现(利用返回值)
+    public List<Character> preorderTraversal(TreeNode root) {
+        List<Character> ret = new ArrayList<>();
+        if(root == null) {
+            return ret;
+        }
+        ret.add(root.val);
+        List<Character> listLeft = preorderTraversal(root.left);
+        ret.addAll(listLeft);
+        List<Character> listRight = preorderTraversal(root.right);
+        ret.addAll(listRight);
+        return ret;
+    }
+
+    //非递归
+    public List<Character> preorderTraversalNon(TreeNode root) {
+        List<Character> ret = new ArrayList<>();
+        if(root == null) {
+            return ret;
+        }
+        TreeNode cur = root;
+        TreeNode top = null;
+        Deque<TreeNode> stack = new LinkedList<>();
+        while(cur != null || !stack.isEmpty()) {
+            while(cur != null) {
+                stack.push(cur);
+                //打印
+                ret.add(cur.val);
+                cur = cur.left;
+            }
+            top = stack.pop();
+            cur = top.right;
+        }
+        return ret;
+    }
+
+    //二叉树中序递归遍历实现(利用返回值) && 非递归
+    public List<Character> inorderTraversalNon(TreeNode root) {
+        // List<Character> ret = new ArrayList<>();
+        // if(root == null) {
+        //     return ret;
+        // }
+        // List<Character> listLeft = inorderTraversalNon(root.left);
+        // ret.addAll(listLeft);
+        // ret.add(root.val);
+        // List<Character> listRight = inorderTraversalNon(root.right);
+        // ret.addAll(listRight);
+        // return ret;
+        // ===============================
+        //非递归
+        List<Character> ret = new ArrayList<>();
+        if(root == null) {
+            return ret;
+        }
+        TreeNode cur = root;
+        TreeNode top = null;
+        Deque<TreeNode> stack = new LinkedList<>();
+        while(cur != null || !stack.isEmpty()) {
+            while(cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            top = stack.pop();
+            //打印
+            ret.add(top.val);
+            cur = top.right;
+        }
+        return ret;
+    }
+
+    //二叉树后序递归遍历实现(利用返回值) && 非递归
+    public List<Character> postorderTraversalNon(TreeNode root) {
+        // List<Character> ret = new ArrayList<>();
+        // if(root == null) {
+        //     return ret;
+        // }
+        // List<Character> listLeft = postorderTraversalNon(root.left);
+        // ret.addAll(listLeft);
+        // List<Character> listRight = postorderTraversalNon(root.right);
+        // ret.addAll(listRight);
+        // ret.add(root.val);
+        // return ret;
+        // ============================================
+        //非递归
+        List<Character> ret = new ArrayList<>();
+        if(root == null) {
+            return ret;
+        }
+        TreeNode cur = root;
+        TreeNode top = null;
+        TreeNode prev = null;
+        Deque<TreeNode> stack = new LinkedList<>();
+        while(cur != null || !stack.isEmpty()) {
+            while(cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            top = stack.peek();
+            if(top.right == null || top.right == prev) {
+                stack.pop();
+                ret.add(top.val);
+                prev = top;
+            }else {
+                cur = top.right;
+            }
+        }
+        return ret;
+    }
+
 }
