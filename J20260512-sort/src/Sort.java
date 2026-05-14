@@ -96,10 +96,51 @@ public class Sort {
         }
     }
 
+    /**
+     *  选择排序
+     *  时间复杂度 : O(N^2)
+     *  空间复杂度 : O(1)
+     *  稳定性 : 不稳定的排序
+     */
     private static void swap(int[] array,int i,int j) {
         int tmp = array[i];
         array[i] = array[j];
         array[j] = tmp;
+    }
+
+    public static void selectSort(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[j] < array[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            swap(array,i,minIndex);
+        }
+    }
+
+    /**
+     *  冒泡排序
+     *  时间复杂度 : O(N^2)
+     *             加了标记以后 最好情况下 (1,2,3,4,5) 时间复杂度为 O(N)
+     *  空间复杂度 : O(1)
+     *  稳定性 : 稳定的排序
+     */
+    public static void bubbleSort(int[] array) {
+        //i 表示趟数
+        for (int i = 0; i < array.length; i++) {
+            boolean flg = false;
+            for (int j = 0; j < array.length - 1 - i; j++) {
+                if (array[j] > array[j+1]) {
+                    swap(array,j,j+1);
+                    flg = true;
+                }
+            }
+            if (!flg) {
+                return;
+            }
+        }
     }
 
 }
