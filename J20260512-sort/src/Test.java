@@ -65,8 +65,16 @@ public class Test {
         System.out.println("冒泡排序耗时: " + (endTime - startTime));
     }
 
-    public static void main(String[] args) {
-        int[] array = new int[10_0000];
+    public static void testQuickSort(int[] array) {
+        int[] array2 = Arrays.copyOf(array,array.length);
+        long startTime = System.currentTimeMillis();
+        Sort.quickSort(array2);
+        long endTime = System.currentTimeMillis();
+        System.out.println("快速排序耗时: " + (endTime - startTime));
+    }
+
+    public static void main1(String[] args) {
+        int[] array = new int[1_0000];
         //order(array);
         inorder(array);
         //randomOrder(array);
@@ -75,15 +83,17 @@ public class Test {
         testHeapSort(array);
         testSelectSort(array);
         testBubbleSort(array);
+        testQuickSort(array);
     }
 
-    public static void main1(String[] args) {
-        int[] array = {31,12,13,141,54,66,27,18};
+    public static void main(String[] args) {
+        int[] array = {31,12,13,141,154,66,27,18};
         //Sort.insertSort(array);
         //Sort.shellSort(array);
         //Sort.heapSort(array);
         //Sort.selectSort(array);
-        Sort.bubbleSort(array);
+        //Sort.bubbleSort(array);
+        Sort.quickSort(array);
         System.out.println(Arrays.toString(array));
     }
 

@@ -1,3 +1,6 @@
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class Sort {
 
    /**
@@ -141,6 +144,142 @@ public class Sort {
                 return;
             }
         }
+    }
+
+    /**
+     *  快速排序
+     *  时间复杂度 :
+     *             最坏情况下 (1,2,3,4,5) || (9,8,7,6,5) 时间复杂度为 O(N^2)
+     *             最好情况下 O(N*logN) 均分待排序序列
+     *  空间复杂度 :
+     *             最坏情况下 O(N)
+     *             最好情况下 O(logN)
+     *  稳定性 : 不稳定的排序
+     */
+    public static void quickSort(int[] array) {
+        quick(array,0, array.length - 1);
+    }
+
+    private static void quick(int[] array,int start,int end) {
+        if (start >= end) {
+            return;
+        }
+        if (end - start + 1 <= 10) {
+            //直接插入排序
+            insertSortRange(array,start,end);
+            return;
+        }
+        //进行三数取中 找到下标
+        int index = threeMid(array,start,end);
+        swap(array,start,index);
+        int par = parttion(array,start,end);
+        quick(array,start,par - 1);
+        quick(array,par + 1,end);
+    }
+
+    private static void insertSortRange(int[] array,int low,int high) {
+        for (int i = low + 1; i <= high; i++) {
+            int tmp = array[i];
+            int j = i - 1;
+            for (; j >= low; j--) {
+                if (array[j] > tmp) {
+                    // 这里改为 >= 就不是稳定的排序了
+                    array[j+1] = array[j];
+                }else {
+                    array[j+1] = tmp;//可以直接在外面写
+                    break;
+                }
+            }
+            array[j+1] = tmp;
+        }
+    }
+
+    //Hoare法
+    private static int parttionHoare(int[] array, int low, int high) {
+        int pivot = array[low];
+        //记录原来 low 下标
+        int i = low;
+        while (low < high) {
+            while (low < high && array[high] >= pivot) {
+                high--;
+            }
+            while (low < high && array[low] <= pivot) {
+                low++;
+            }
+            swap(array, low, high);
+        }
+        swap(array,i,low);
+        return low;
+    }
+
+    private static int threeMid(int[] array,int low,int high) {
+        int mid = (low + high) / 2;
+        if (array[low] < array[high]) {
+            if (array[mid] < array[low]) {
+                return low;
+            } else if (array[mid] > array[high]) {
+                return high;
+            }else {
+                return mid;
+            }
+        }else {
+            //array[low] > array[high]
+            if (array[mid] < array[high]) {
+                return high;
+            } else if (array[mid] > array[low]) {
+                return low;
+            }else {
+                return mid;
+            }
+        }
+    }
+
+    //挖坑法
+    private static int parttion2(int[] array, int low, int high) {
+        int tmp = array[low];
+        while (low < high) {
+            while (low < high && array[high] >= tmp) {
+                high--;
+            }
+            array[low] = array[high];
+            while (low < high && array[low] <= tmp) {
+                low++;
+            }
+            array[high] = array[low];
+        }
+        array[low] = tmp;
+        return low;
+    }
+
+    //前后指针法
+    private static int parttion(int[] array, int low, int high) {
+        int prev = low;
+        int cur = low + 1;
+        while (cur <= high) {
+            if(array[cur] < array[low] && array[++prev] != array[cur]) {
+                swap(array,cur,prev);
+            }
+            cur++;
+        }
+        swap(array,prev,low);
+        return prev;
+    }
+
+    //快速排序非递归
+    public static void quickSortNor(int[] array) {
+        int start = 0;
+        int end = array.length - 1;
+        int par = parttion2(array,start,end);
+        Deque<Integer> stack = new LinkedList<>();
+        //左边有两个数对
+        if (par > start + 1) {
+            stack.push(start);
+            stack.push(par - 1);
+        }
+        //右边有两个数对
+        
+        //栈是否为空 直到栈为空 则结束 每次从栈里拿出 2 个元素
+
     }
 
 }
