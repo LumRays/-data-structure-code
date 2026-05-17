@@ -238,10 +238,12 @@ public class Sort {
     private static int parttion2(int[] array, int low, int high) {
         int tmp = array[low];
         while (low < high) {
+            // = 是不可以省略的 否则会死循环
             while (low < high && array[high] >= tmp) {
                 high--;
             }
             array[low] = array[high];
+            // = 是不可以省略的 否则会死循环
             while (low < high && array[low] <= tmp) {
                 low++;
             }
@@ -277,9 +279,76 @@ public class Sort {
             stack.push(par - 1);
         }
         //右边有两个数对
-        
+        if (par < end - 1) {
+            stack.push(par + 1);
+            stack.push(end);
+        }
         //栈是否为空 直到栈为空 则结束 每次从栈里拿出 2 个元素
+        while (!stack.isEmpty()) {
+            end = stack.pop();
+            start = stack.pop();
+            par = parttion2(array,start,end);
+            //左边有两个数对
+            if (par > start + 1) {
+                stack.push(start);
+                stack.push(par - 1);
+            }
+            //右边有两个数对
+            if (par < end - 1) {
+                stack.push(par + 1);
+                stack.push(end);
+            }
+        }
 
+    }
+
+    /**
+     *  归并排序
+     *  时间复杂度 : O(N*logN)
+     *  空间复杂度 : O(N)
+     *  稳定性 : 稳定的排序
+     */
+    public static void mergeSort(int[] array) {
+        mergeSortChild(array,0, array.length - 1);
+    }
+
+    private static void mergeSortChild(int[] array,int left,int right) {
+        if (left >= right) {
+            return;
+        }
+        int mid = (left + right) / 2;
+        mergeSortChild(array,left,mid);
+        mergeSortChild(array,mid + 1,right);
+        //合并
+        merge(array,left,mid,right);
+    }
+
+    private static void merge(int[] array,int left,int mid,int right) {
+        int[] tmp = new int[right - left + 1];
+        int k = 0;
+        int s1 = left;
+        int e1 = mid;
+        int s2 = mid + 1;
+        int e2 = right;
+        //保证两个子序列当中 都有数据
+        while (s1 <= e1 && s2 <= e2) {
+            if (array[s1] <= array[s2]) {
+                tmp[k++] = array[s1++];
+            }else {
+                tmp[k++] = array[s2++];
+                //k++;
+                //s2++;
+            }
+        }
+        while (s1 <= e1) {
+            tmp[k++] = array[s1++];
+        }
+        while (s2 <= e2) {
+            tmp[k++] = array[s2++];
+        }
+        for (int i = 0; i < tmp.length; i++) {
+            array[i + left] = tmp[i];
+        }
     }
 
 }
