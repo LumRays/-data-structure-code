@@ -87,14 +87,16 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        int[] array = {31,112,13,141,154,66,27,18};
+        int[] array = {91,98,95,95,94,92,93,94,96,97,98,99,90};
         //Sort.insertSort(array);
         //Sort.shellSort(array);
         //Sort.heapSort(array);
         //Sort.selectSort(array);
         //Sort.bubbleSort(array);
         //Sort.quickSortNor(array);
-        Sort.mergeSort(array);
+        //Sort.mergeSort(array);
+        //Sort.mergeSortNon(array);
+        Sort.countSort(array);
         System.out.println(Arrays.toString(array));
     }
 

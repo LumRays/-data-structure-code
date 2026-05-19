@@ -212,6 +212,7 @@ public class Sort {
         return low;
     }
 
+    //三数取中法
     private static int threeMid(int[] array,int low,int high) {
         int mid = (low + high) / 2;
         if (array[low] < array[high]) {
@@ -348,6 +349,63 @@ public class Sort {
         }
         for (int i = 0; i < tmp.length; i++) {
             array[i + left] = tmp[i];
+        }
+    }
+
+    //归并排序非递归
+    public static void mergeSortNon(int[] array) {
+        int gap = 1;
+        while (gap < array.length) {
+            for (int i = 0; i < array.length; i = i + 2 * gap) {
+                int left = i;
+                int mid = left + gap - 1;
+                if (mid >= array.length) {
+                    mid = array.length - 1;
+                }
+                int right = mid + gap;
+                if (right >= array.length) {
+                    right = array.length - 1;
+                }
+                merge(array,left,mid,right);
+            }
+            gap *= 2;
+        }
+    }
+
+    /**
+     *  计数排序
+     *  时间复杂度 : O(max(N,范围))
+     *  空间复杂度 : O(范围)
+     *  稳定性 : 稳定的排序
+     */
+    public static void countSort(int[] array) {
+        //1. 找到数组的最大值和最小值
+        int max = array[0];
+        int min = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] > max) {
+                max = array[i];
+            }
+            if (array[i] < min) {
+                min = array[i];
+            }
+        }
+        //2. 定义一个计数数组
+        int range = max - min + 1;
+        int[] count = new int[range];
+        //3. 遍历 array 数组 开始计数
+        for (int i = 0; i < array.length; i++) {
+            int index = array[i];
+            count[index - min]++;
+        }
+        //4. 遍历计数数组
+        int k = 0;
+        for (int i = 0; i < count.length; i++) {
+            while (count[i] != 0) {
+                array[k++] = i + min;
+                count[i]--;
+                //k++;
+            }
         }
     }
 
