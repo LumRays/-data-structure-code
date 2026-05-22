@@ -172,7 +172,7 @@ public class Sort {
         //进行三数取中 找到下标
         int index = threeMid(array,start,end);
         swap(array,start,index);
-        int par = parttion(array,start,end);
+        int par = parttionHoare(array,start,end);
         quick(array,start,par - 1);
         quick(array,par + 1,end);
     }
@@ -269,7 +269,7 @@ public class Sort {
     }
 
     //快速排序非递归
-    public static void quickSortNor(int[] array) {
+    public static void quickSortNon(int[] array) {
         int start = 0;
         int end = array.length - 1;
         int par = parttion2(array,start,end);
