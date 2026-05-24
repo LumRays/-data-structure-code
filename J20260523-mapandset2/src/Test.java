@@ -23,6 +23,108 @@ class Student {
 public class Test {
 
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNextLine()) { // 注意 while 处理多个 case
+            String str1 = in.nextLine();
+            String str2 = in.nextLine();
+            func(str1,str2);
+        }
+    }
+
+    private static void func(String str1,String str2) {
+        Set<Character> set = new HashSet<>();
+        //1. 遍历当前实际输出的字符串
+        for(char ch : str2.toUpperCase().toCharArray()) {
+            set.add(ch);
+        }
+        //2. 遍历期望的字符串
+        Set<Character> setBroken = new HashSet<>();
+        for(char ch : str1.toUpperCase().toCharArray()) {
+            if(!set.contains(ch) && !setBroken.contains(ch)) {
+                setBroken.add(ch);
+                System.out.print(ch);
+            }
+        }
+    }
+
+    /*public Node copyRandomList(Node head) {
+        if(head == null) {
+            return null;
+        }
+        Map<Node,Node> map = new HashMap<>();
+        //1. 存储对应的映射关系
+        Node cur = head;
+        while(cur != null) {
+            Node newNode = new Node(cur.val);
+            map.put(cur,newNode);
+            cur = cur.next;
+        }
+        //2. 修改 next 和 random 的值
+        cur = head;
+        while(cur != null) {
+            map.get(cur).next = map.get(cur.next);
+            map.get(cur).random = map.get(cur.random);
+            cur = cur.next;
+        }
+        return map.get(head);
+    }*/
+
+    public int numJewelsInStones(String jewels, String stones) {
+        HashSet<Character> set = new HashSet<>();
+        int count = 0;
+        for(int i = 0;i < jewels.length();i++) {
+            char ch = jewels.charAt(i);
+            set.add(ch);
+        }
+
+        for(int i = 0;i < stones.length();i++) {
+            char ch = stones.charAt(i);
+            if(set.contains(ch)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static void main6(String[] args) {
+        int[] array = {1,2,3,4,5,1,2,3,2};
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for (int i = 0; i < array.length; i++) {
+            if (map.get(array[i]) == null) {
+                //当前数据没有在 map 当中进行过统计
+                map.put(array[i],1);
+            }else {
+                Integer val = map.get(array[i]);
+                map.put(array[i],val + 1);
+            }
+        }
+        //遍历 map
+        Set<Map.Entry<Integer, Integer>> entries = map.entrySet();
+        for (Map.Entry<Integer, Integer> entry : entries) {
+            System.out.println("key: " + entry.getKey() + " - > val: " + entry.getValue());
+        }
+    }
+
+    public int singleNumber(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for(int i = 0;i < nums.length;i++) {
+            if(!set.contains(nums[i])) {
+                set.add(nums[i]);
+            }else {
+                set.remove(nums[i]);
+            }
+        }
+
+        for(int i = 0;i < nums.length;i++) {
+            if(set.contains(nums[i])) {
+                return nums[i];
+            }
+        }
+        return -1;
+    }
+
+    public static void main5(String[] args) {
         HashMap<String,Integer> map = new HashMap<>();
         map.put("vibrant",8);
         map.put("Java",6);
